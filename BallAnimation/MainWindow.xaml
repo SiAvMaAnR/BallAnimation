@@ -11,12 +11,24 @@
     <Window.Resources>
         <EllipseGeometry x:Key="BallEllipseGeometry" Center="50,50" RadiusX="50" RadiusY="50"/>
 
-        <PathGeometry x:Key="WavePathGeometry" PresentationOptions:Freeze="True">
+        <PathGeometry x:Key="PathGeometry" PresentationOptions:Freeze="True">
             <PathFigure IsClosed="False" StartPoint="0,50">
                 <QuadraticBezierSegment Point1="250,150" Point2="500,100"/>
                 <QuadraticBezierSegment Point1="750,20" Point2="1000,140"/>
                 <QuadraticBezierSegment Point1="1250,250" Point2="1500,300"/>
                 <QuadraticBezierSegment Point1="1750,350" Point2="2000,400"/>
+            </PathFigure>
+        </PathGeometry>
+
+        <PathGeometry x:Key="BackgroundPathGeometry" PresentationOptions:Freeze="True">
+            <PathFigure IsClosed="False" StartPoint="0,50">
+                <QuadraticBezierSegment Point1="250,150" Point2="500,100"/>
+                <QuadraticBezierSegment Point1="750,20" Point2="1000,140"/>
+                <QuadraticBezierSegment Point1="1250,250" Point2="1500,300"/>
+                <QuadraticBezierSegment Point1="1750,350" Point2="2000,400"/>
+                <LineSegment Point="2000,1000"/>
+                <LineSegment Point="0,1000"/>
+                <LineSegment Point="0,50"/>
             </PathFigure>
         </PathGeometry>
     </Window.Resources>
@@ -36,7 +48,7 @@
                     <DoubleAnimationUsingPath 
                         Storyboard.TargetName="TranslateTransform"
                         Storyboard.TargetProperty="X"
-                        PathGeometry="{StaticResource WavePathGeometry}"
+                        PathGeometry="{StaticResource PathGeometry}"
                         Source="X"
                         Duration="0:0:10"
                         AccelerationRatio="1"/>
@@ -44,13 +56,13 @@
                     <DoubleAnimationUsingPath 
                         Storyboard.TargetName="TranslateTransform"
                         Storyboard.TargetProperty="Y"
-                        PathGeometry="{StaticResource WavePathGeometry}"
+                        PathGeometry="{StaticResource PathGeometry}"
                         Source="Y"
                         Duration="0:0:10"
                         AccelerationRatio="1"/>
 
-                    
-                    
+
+
                 </Storyboard>
             </BeginStoryboard>
         </EventTrigger>
@@ -77,6 +89,20 @@
 
         <Grid Grid.Row="0" x:Name="UserGrid">
             <Canvas x:Name="UserCanvas">
+                <Canvas.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                <RotateTransform Angle="45" CenterX="0.5" CenterY="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FF072B42"/>
+                        <GradientStop Color="#FF0075FF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Canvas.Background>
                 <Path Stroke="Black" 
                       Panel.ZIndex="100" 
                       Canvas.Top="100" 
@@ -86,9 +112,14 @@
                       Data="{StaticResource BallEllipseGeometry}">
                     <Path.Fill>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="White" Offset="0.157"/>
-                            <GradientStop Color="Red" Offset="0.856"/>
-                            <GradientStop Color="#FF3100FF" Offset="0.526"/>
+                            <GradientStop Color="#FF071230" Offset="0"/>
+                            <GradientStop Color="#FF085EFF" Offset="0.788"/>
+                            <GradientStop Color="#FF07856E" Offset="0.324"/>
+                            <GradientStop Color="#FF0F4951" Offset="0.429"/>
+                            <GradientStop Color="#FFA90B9F" Offset="0.612"/>
+                            <GradientStop Color="#FF08FF55" Offset="0.875"/>
+                            <GradientStop Color="#FFDDCB21" Offset="0.958"/>
+                            <GradientStop Color="#FFD91958" Offset="0.131"/>
                         </LinearGradientBrush>
                     </Path.Fill>
                     <Path.RenderTransform>
@@ -102,9 +133,32 @@
                 <Path Panel.ZIndex="200" 
                       Canvas.Top="200" 
                       Canvas.Left="0" 
-                      x:Name="WavePath"  
+                      x:Name="PathGeometry"  
+                      Stroke="Black"  
+                      Data="{StaticResource PathGeometry}" />
+
+                <Path Panel.ZIndex="200" 
+                      Canvas.Top="200" 
+                      Canvas.Left="0" 
+                      x:Name="BackgroundPathGeometry"  
                       Stroke="#FF142248"  
-                      Data="{StaticResource WavePathGeometry}" />
+                      Data="{StaticResource BackgroundPathGeometry}" >
+                    <Path.Fill>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <LinearGradientBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                    <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                    <RotateTransform Angle="45" CenterX="0.5" CenterY="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </LinearGradientBrush.RelativeTransform>
+                            <GradientStop Color="Black" Offset="1"/>
+                            <GradientStop Color="Red" Offset="0"/>
+                            <GradientStop Color="#FF4D1C1C" Offset="0.638"/>
+                        </LinearGradientBrush>
+                    </Path.Fill>
+                </Path>
             </Canvas>
         </Grid>
 
